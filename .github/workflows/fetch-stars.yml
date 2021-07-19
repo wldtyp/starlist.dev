@@ -1,0 +1,10 @@
+name: Fetch Top 1000
+on: [push]
+jobs:
+  Fetch-Top-1000-Stars:
+    runs-on: ubuntu-latest
+    steps:
+      - run: ./fetch_1000.sh
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
