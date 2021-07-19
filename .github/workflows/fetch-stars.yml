@@ -1,5 +1,5 @@
 name: Fetch Top 1000
-on: [push]
+on: workflow_dispatch
 jobs:
   Fetch-Top-1000-Stars:
     runs-on: ubuntu-latest

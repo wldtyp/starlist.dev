@@ -15,9 +15,8 @@ def database():
 
 
 with database() as db:
-    db.execute("CREATE TABLE repositories (id integer primary key, full_name text, description text, language text)")
-    db.execute("CREATE TABLE invocations (id integer primary key, invoked_at timestamp default current_timestamp)")
-    db.execute("CREATE TABLE stats (day date, repository_id integer, stars integer, forks integer, PRIMARY KEY ( day, repository_id))")
+    db.execute("CREATE TABLE IF NOT EXISTS repositories (id integer primary key, full_name text, description text, language text)")
+    db.execute("CREATE TABLE IF NOT EXISTS stats (day date, repository_id integer, stars integer, forks integer, PRIMARY KEY ( day, repository_id))")
 
 
 with database() as db:
