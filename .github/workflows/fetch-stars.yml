@@ -4,6 +4,8 @@ jobs:
   Fetch-Top-1000-Stars:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
       - run: ./fetch_1000.sh
       - name: List files in the repository
         run: |
