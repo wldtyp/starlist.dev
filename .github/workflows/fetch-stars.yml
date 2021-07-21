@@ -14,9 +14,6 @@ jobs:
         run: ./fetch_1000.sh
       - name: Process Stars
         run: python process_stars.py
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
       - name: Commit and push if it changed
         run: |-
           git config user.name "Automated"
