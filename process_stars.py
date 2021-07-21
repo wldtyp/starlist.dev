@@ -36,10 +36,14 @@ with database() as db:
     with open('table.md', 'w') as f:
         result = db.execute("Select stars, forks, language, full_name, description from stats join repositories on stats.repository_id = repositories.id where stats.day = DATE('now') order by stats.stars desc")
         c = 1
+        f.write('''
+            | Number | Stars | Forks | Language| Name  | Description |
+            | :---   | :---: | :---: | :---    | :---  | :---        |
+            ''')
         for row in result:
             stars, forks, language, full_name, description = (map(str,row))
             description = description.replace('|','')[:500]
-            line = f"| {c} | {stars} | {forks} | {language} | {full_name} | {description} |\n" 
+            line = f"| {c} | {stars} | {forks} | {language} | {full_name} | {description} | \n" 
             f.write(line)
             c += 1
 

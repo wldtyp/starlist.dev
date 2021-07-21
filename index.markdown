@@ -4,3 +4,5 @@
 
 layout: home
 ---
+
+{% include_relative table.md %}
