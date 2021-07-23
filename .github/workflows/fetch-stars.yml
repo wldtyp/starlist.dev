@@ -1,5 +1,7 @@
 name: Fetch Top 1000
-on: workflow_dispatch
+on: 
+  schedule:
+    - cron: '23 * * * 5'
 jobs:
   Fetch-Top-1000-Stars:
     runs-on: ubuntu-latest
