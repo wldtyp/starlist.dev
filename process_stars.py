@@ -1,4 +1,5 @@
 import json
+import html
 import sqlite3
 from pathlib import Path
 from contextlib import contextmanager
@@ -42,7 +43,7 @@ with database() as db:
 ''')
         for row in result:
             stars, forks, language, full_name, description = (map(str,row))
-            description = description.replace('|','')[:500]
+            description = html.escape(description.replace('|','')[:500])
             line = f"| {c} | {stars} | {forks} | {language} | {full_name} | {description} | \n" 
             f.write(line)
             c += 1
