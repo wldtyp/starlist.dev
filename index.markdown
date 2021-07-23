@@ -4,6 +4,8 @@
 
 layout: home
 ---
-# 🌟 Top 1000 GitHub Repositories Ranked by Stars
+{{ site.pages[1].content }}
+
+## 🤩 Top 1000 GitHub Repositories Ranked by Stars
 
 {% include_relative table.md %}
