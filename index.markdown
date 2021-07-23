@@ -4,6 +4,6 @@
 
 layout: home
 ---
-# 🌟 Stars!
+# 🌟 Top 1000 GitHub Repositories Ranked by Stars
 
 {% include_relative table.md %}
