@@ -12,8 +12,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - name: Searching for stars!
-        run: ./fetch_1000.sh
       - name: Process Stars
         run: python process_stars.py
       - name: Commit and push if it changed

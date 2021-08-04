@@ -1,7 +1,8 @@
 import json
 import html
 import sqlite3
-from pathlib import Path
+import urllib.request
+import time
 from contextlib import contextmanager
 
 @contextmanager
@@ -14,6 +15,11 @@ def database():
         con.commit()
         con.close()
 
+def json_search(page=1, language=None):
+    l = f"&language:{language}" if language else ''
+    url = f'https://api.github.com/search/repositories?q=stars:>1000{l}&per_page=100&page={page}'
+    f = urllib.request.urlopen(url)
+    return json.load(f)
 
 with database() as db:
     db.execute("CREATE TABLE IF NOT EXISTS repositories (id integer primary key, full_name text, description text, language text)")
@@ -21,16 +27,14 @@ with database() as db:
 
 
 with database() as db:
-    pathlist = Path('./').glob('*.json')
-    for path in pathlist:
-        with open(path) as f:
-            search_results = json.load(f)
-            for result in search_results['items']:
-                insert_query = "insert or replace into repositories (id, full_name, description, language) values (?,?,?,?)"
-                db.execute(insert_query, (result['id'], result['full_name'], result['description'], result['language']))
-            
-            for result in search_results['items']:
-                db.execute("insert or replace into stats values (DATE('now'),?,?,?)", (result['id'], result['stargazers_count'], result['forks']))
+    for page in range(1,11):
+        search_results = json_search(page)
+        for result in search_results['items']:
+            insert_query = "insert or replace into repositories (id, full_name, description, language) values (?,?,?,?)"
+            db.execute(insert_query, (result['id'], result['full_name'], result['description'], result['language']))
+        for result in search_results['items']:
+            db.execute("insert or replace into stats values (DATE('now'),?,?,?)", (result['id'], result['stargazers_count'], result['forks']))
+        time.sleep(3)
 
 
 with database() as db:
